@@ -5,36 +5,32 @@ sportovni aplikace napsaná v pythonu používající [textual](https://textual.
 
 Po spuštění se zobrazí následující data:
 
-- Schedule 
-- Standings
-- Injury
+- Program 
+- Tabulka
+- Zranění
 
-for each major sport:
+Pro daný sport:
 - MLB
 - NBA
 - NFL
 - NHL
 
-all data is scraped from [CBS Sports](https://cbssports.com).
+Všechna data jsou sbírána z [CBS Sports](https://cbssports.com).
 
----
-![screenshot](screenshot.png)
-![screenshot](screenshot2.png)
----
 
-## How to Run:
+## Jak spustit:
 
-#### Run using Python 
-install packages locally or to virtual enviornment.
+#### Spustit pomocí pythonu
+instalovat balíčky lokálně nebo do virtuálního prostředí.
 ```
 $ pip install -r requirements.txt
 $ python sports_tui.py
 ```
 
-#### Create executable file
-use pyinstaller to create an executable file for your operating system.
-run file direcly in folder or place executable in path to run anywhere.
-script creates a sports executable file. this can be changed by editing the `--name` flag in the script.
+#### Vytvořít spustitelný soubor
+Pomocí PyInstalleru vytvořte spustitelný soubor pro váš operační systém. 
+Spusťte soubor přímo ve složce nebo umístěte spustitelný soubor do cesty a spusťte kdekoli. 
+Skript vytvoří spustitelný soubor pro sport. To lze změnit úpravou příznaku '--name' ve skriptu.
 ```
 $ ./compile.sh
 $ cd dist
