@@ -1,9 +1,10 @@
 
-# Sports Terminal App
+# Sportovní aplikace v terminálu
 
-a simple sports tui app written in python using [textual](https://textual.textualize.io/).
+sportovni aplikace napsaná v pythonu používající [textual](https://textual.textualize.io/).
 
-see the following data:
+Po spuštění se zobrazí následující data:
+
 - Schedule 
 - Standings
 - Injury
