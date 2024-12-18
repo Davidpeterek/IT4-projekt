@@ -178,7 +178,7 @@ class Sports(App):
 
     def compose(self):
         yield Header()
-        yield Label(' Select Sport ...')
+        yield Label(' Vyber sport ...')
         yield SportsListView(
             ListItem(Label(':baseball: MLB'), name='mlb'),
             ListItem(Label(':basketball: NBA'), name='nba'),
