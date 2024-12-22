@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 #
-# BY: chadless1
+#
 #
 # DESCRIPTION:
 #
-# a simple sports tui app
+# jednoduchá sports tui app
 #
-# select sport and view data
+# vyber sport a sleduj data
 
 import os
 import sys
