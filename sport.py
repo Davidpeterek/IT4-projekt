@@ -84,7 +84,7 @@ class SportsScreen(Screen):
                         yield Label('')
                         yield Pretty(table)
                         yield Label('')
-                # standings
+                # tabulky
                 with SportsTableContainer(classes='bottom'):
                     if self.sport_name == 'mlb':
                         df1 = df_standings[1]
@@ -144,17 +144,17 @@ class SportsScreen(Screen):
                         yield Label('')
 
                 # zraneni
-                with SportsTableContainer(classes='bottom'):
-                    for name, table in zip(team_name, df_injury):
-                        table['first_name'] = table['Player'].str.split().str[0]
-                        table['last_name'] = table['Player'].str.split().str[2]
-                        table['Player'] = table['first_name'] + table['last_name']
-                        table = table.drop(['first_name', 'last_name'], axis=1)
-                        yield Label(f'[bold purple][u]{name.text.strip()}[/u][/bold purple]')
-                        yield Label('')
-                        yield Label(tabulate(table, headers='keys', showindex=False))
-                        yield Label('')
-        yield Footer()
+                        with SportsTableContainer(classes='bottom'):
+                            for name, table in zip(team_name, df_injury):
+                                table['first_name'] = table['Player'].str.split().str[0]
+                                table['last_name'] = table['Player'].str.split().str[2]
+                                table['Player'] = table['first_name'] + table['last_name']
+                                table = table.drop(['first_name', 'last_name'], axis=1)
+                                yield Label(f'[bold purple][u]{name.text.strip()}[/u][/bold purple]')
+                                yield Label('')
+                                yield Label(tabulate(table, headers='keys', showindex=False))
+                                yield Label('')
+                yield Footer()
 
 
 class SportsListView(ListView):
