@@ -143,7 +143,7 @@ class SportsScreen(Screen):
                         yield Pretty(df2)
                         yield Label('')
 
-                # injury
+                # zraneni
                 with SportsTableContainer(classes='bottom'):
                     for name, table in zip(team_name, df_injury):
                         table['first_name'] = table['Player'].str.split().str[0]
