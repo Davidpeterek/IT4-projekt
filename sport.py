@@ -9,7 +9,9 @@
 # vyber sport a sleduj data
 
 import os
+import os
 import sys
+import itertools
 import pandas as pd
 from bs4 import BeautifulSoup
 from requests import get
@@ -25,14 +27,14 @@ from textual.containers import Container, ScrollableContainer
 
 __version__ = 1.0
 
-
 class SportsTableContainer(ScrollableContainer):
+
     BINDINGS = [
-        Binding("k", "scroll_up", "Scroll Up", show=False),
-        Binding("j", "scroll_down", "Scroll Down", show=False),
-        Binding("h", "scroll_left", "Scroll Left", show=False),
-        Binding("l", "scroll_right", "Scroll Right", show=False),
-    ]
+            Binding("k", "scroll_up", "Scroll Up", show=False),
+            Binding("j", "scroll_down", "Scroll Down", show=False),
+            Binding("h", "scroll_left", "Scroll Left", show=False),
+            Binding("l", "scroll_right", "Scroll Right", show=False),
+            ]
 
 
 class SportsScreen(Screen):
@@ -54,6 +56,7 @@ class SportsScreen(Screen):
         url_date = get('https://www.cbssports.com/{}/schedule/'.format(self.sport_name))
         soup = BeautifulSoup(url_date.content, 'html.parser')
         dates = soup.find_all('h4', {'class': 'TableBase-title TableBase-title--large'})
+        dates_list = [d.text.strip() for d in dates]
 
         ## standings ##
         url_standings = 'https://www.cbssports.com/{}/standings/'.format(self.sport_name)
@@ -78,9 +81,9 @@ class SportsScreen(Screen):
             with TabbedContent('Schedule', 'Standings', 'Injury', classes='bottom'):
                 # schedule
                 with SportsTableContainer(classes='bottom'):
-                    for date, table in zip(dates, df):
+                    for date, table in itertools.zip_longest(dates_list, df, fillvalue=' '):
                         table = table.iloc[:, 0:3]
-                        yield Label(f'[bold purple]{date.text.strip()}[/bold purple]')
+                        yield Label(f'[bold purple]{date}[/bold purple]')
                         yield Label('')
                         yield Pretty(table)
                         yield Label('')
