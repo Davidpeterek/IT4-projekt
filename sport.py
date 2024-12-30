@@ -4,11 +4,10 @@
 #
 # DESCRIPTION:
 #
-# jednoduchá sports tui app
+# jednoduchá terminalova aplikace
 #
 # vyber sport a sleduj data
 
-import os
 import os
 import sys
 import itertools
@@ -27,14 +26,14 @@ from textual.containers import Container, ScrollableContainer
 
 __version__ = 1.0
 
-class SportsTableContainer(ScrollableContainer):
 
+class SportsTableContainer(ScrollableContainer):
     BINDINGS = [
-            Binding("k", "scroll_up", "Scroll Up", show=False),
-            Binding("j", "scroll_down", "Scroll Down", show=False),
-            Binding("h", "scroll_left", "Scroll Left", show=False),
-            Binding("l", "scroll_right", "Scroll Right", show=False),
-            ]
+        Binding("k", "scroll_up", "Scroll Up", show=False),
+        Binding("j", "scroll_down", "Scroll Down", show=False),
+        Binding("h", "scroll_left", "Scroll Left", show=False),
+        Binding("l", "scroll_right", "Scroll Right", show=False),
+    ]
 
 
 class SportsScreen(Screen):
@@ -47,26 +46,26 @@ class SportsScreen(Screen):
 
     def compose(self):
 
-        ## schedule ##
-        # get schedule from url and create dataframe
+        ## program ##
+        # dostan program z url a vytvor dataframe
         url = 'https://www.cbssports.com/{}/schedule/'.format(self.sport_name)
         df = pd.read_html(url)
 
-        # get dates from bs4
+        # dostan data z bs4
         url_date = get('https://www.cbssports.com/{}/schedule/'.format(self.sport_name))
         soup = BeautifulSoup(url_date.content, 'html.parser')
         dates = soup.find_all('h4', {'class': 'TableBase-title TableBase-title--large'})
         dates_list = [d.text.strip() for d in dates]
 
-        ## standings ##
+        ## tabulka ##
         url_standings = 'https://www.cbssports.com/{}/standings/'.format(self.sport_name)
         df_standings = pd.read_html(url_standings)
 
-        ## injury ##
+        ## zraneni ##
         url_injury = 'https://www.cbssports.com/{}/injuries/'.format(self.sport_name)
         df_injury = pd.read_html(url_injury)
 
-        # get team name from bs4
+        # dostan tym z bs4
         url_team_name = get('https://www.cbssports.com/{}/injuries/'.format(self.sport_name))
         soup = BeautifulSoup(url_team_name.content, 'html.parser')
         team_name = soup.find_all('span', {'class': 'TeamName'})
@@ -79,7 +78,7 @@ class SportsScreen(Screen):
             yield Rule(line_style='ascii')
         with Container(classes='bottom'):
             with TabbedContent('Schedule', 'Standings', 'Injury', classes='bottom'):
-                # schedule
+                # program
                 with SportsTableContainer(classes='bottom'):
                     for date, table in itertools.zip_longest(dates_list, df, fillvalue=' '):
                         table = table.iloc[:, 0:3]
@@ -87,7 +86,7 @@ class SportsScreen(Screen):
                         yield Label('')
                         yield Pretty(table)
                         yield Label('')
-                # tabulky
+                # tabulka
                 with SportsTableContainer(classes='bottom'):
                     if self.sport_name == 'mlb':
                         df1 = df_standings[1]
@@ -147,17 +146,17 @@ class SportsScreen(Screen):
                         yield Label('')
 
                 # zraneni
-                        with SportsTableContainer(classes='bottom'):
-                            for name, table in zip(team_name, df_injury):
-                                table['first_name'] = table['Player'].str.split().str[0]
-                                table['last_name'] = table['Player'].str.split().str[2]
-                                table['Player'] = table['first_name'] + table['last_name']
-                                table = table.drop(['first_name', 'last_name'], axis=1)
-                                yield Label(f'[bold purple][u]{name.text.strip()}[/u][/bold purple]')
-                                yield Label('')
-                                yield Label(tabulate(table, headers='keys', showindex=False))
-                                yield Label('')
-                yield Footer()
+                with SportsTableContainer(classes='bottom'):
+                    for name, table in zip(team_name, df_injury):
+                        table['first_name'] = table['Player'].str.split().str[0]
+                        table['last_name'] = table['Player'].str.split().str[2]
+                        table['Player'] = table['first_name'] + table['last_name']
+                        table = table.drop(['first_name', 'last_name'], axis=1)
+                        yield Label(f'[bold purple][u]{name.text.strip()}[/u][/bold purple]')
+                        yield Label('')
+                        yield Label(tabulate(table, headers='keys', showindex=False))
+                        yield Label('')
+        yield Footer()
 
 
 class SportsListView(ListView):
