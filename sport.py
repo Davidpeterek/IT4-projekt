@@ -54,7 +54,7 @@ class SportsScreen(Screen):
         # dostan data z bs4
         url_date = get('https://www.cbssports.com/{}/schedule/'.format(self.sport_name))
         soup = BeautifulSoup(url_date.content, 'html.parser')
-        dates = soup.find_all('h4', {'class': 'TableBase-title TableBase-title--large'})
+        dates = soup.find_all('h3', {'class': 'TableBase-title TableBase-title--large'})
         dates_list = [d.text.strip() for d in dates]
 
         ## tabulka ##
@@ -97,9 +97,7 @@ class SportsScreen(Screen):
                         df2 = df2.iloc[:, 0:3]
                         df2 = df2.droplevel(0, axis=1)
                         df2 = df2.dropna()
-                        yield Label('[bold purple]American[/bold purple]')
                         yield Pretty(df1)
-                        yield Label('[bold purple]National[/bold purple]')
                         yield Pretty(df2)
                         yield Label('')
                     elif self.sport_name == 'nba':
@@ -111,9 +109,9 @@ class SportsScreen(Screen):
                         df2 = df2.iloc[:, 1:5]
                         df2 = df2.droplevel(0, axis=1)
                         df2 = df2.dropna()
-                        yield Label('[bold purple]Eastern[/bold purple]')
+                        yield Label('[bold purple]Východní[/bold purple]')
                         yield Pretty(df1)
-                        yield Label('[bold purple]Western[/bold purple]')
+                        yield Label('[bold purple]Západní[/bold purple]')
                         yield Pretty(df2)
                         yield Label('')
                     elif self.sport_name == 'nhl':
@@ -125,9 +123,9 @@ class SportsScreen(Screen):
                         df2 = df2.iloc[:, 0:6]
                         df2 = df2.droplevel(0, axis=1)
                         df2 = df2.dropna()
-                        yield Label('[bold purple]Eastern[/bold purple]')
+                        yield Label('[bold purple]Východní[/bold purple]')
                         yield Pretty(df1)
-                        yield Label('[bold purple]Western[/bold purple]')
+                        yield Label('[bold purple]Západní[/bold purple]')
                         yield Pretty(df2)
                         yield Label('')
                     elif self.sport_name == 'nfl':
@@ -180,7 +178,7 @@ class Sports(App):
 
     def compose(self):
         yield Header()
-        yield Label(' Select Sport ...')
+        yield Label(' Vyber SPORT ...')
         yield SportsListView(
             ListItem(Label(':baseball: MLB'), name='mlb'),
             ListItem(Label(':basketball: NBA'), name='nba'),
