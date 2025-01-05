@@ -29,23 +29,23 @@ class SportsTableContainer(ScrollableContainer):
 class SportsScreen(Screen):
     BINDINGS = [
         ("backspace", "app.pop_screen", "Zpět"),  # Umožňuje uživateli vrátit se na předchozí obrazovku
-        ("escape", "app.pop_screen", "Zpět")       # Další zkratka pro návrat
+        ("escape", "app.pop_screen", "Zpět")       # Další možnost pro návrat
     ]
 
-    sport_name = reactive('sport', recompose=True)  # Reaktivní vlastnost pro sledování vybraného sportu
+    sport_name = reactive('sport', recompose=True)  # Reaktivní vlastnost pro sledování uvedeného sportu
 
     def compose(self):
-        # Šablony URL pro získávání dat
+        #  URL pro získávání dat
         url = 'https://www.cbssports.com/{}/schedule/'.format(self.sport_name)
-        df = pd.read_html(url)  # Načtení rozpisu do DataFrame
+        df = pd.read_html(url)  # Načtení rozpisu do DataFramu
 
-        # Získání dat o rozpisu pomocí BeautifulSoup
+        # Získání dat  rozpisu pomocí BeautifulSoup
         url_date = get('https://www.cbssports.com/{}/schedule/'.format(self.sport_name))
         soup = BeautifulSoup(url_date.content, 'html.parser')
         dates = soup.find_all('h3', {'class': 'TableBase-title TableBase-title--large'})
         dates_list = [d.text.strip() for d in dates]
 
-        # Načtení tabulky pořadí
+        # Načítání tabulky pro pořadí
         url_standings = 'https://www.cbssports.com/{}/standings/'.format(self.sport_name)
         df_standings = pd.read_html(url_standings)
 
@@ -176,9 +176,9 @@ class Sports(App):
         yield Header()
         yield Label(' Vyber SPORT ...')
         yield SportsListView(
+            ListItem(Label(':basketball: NBA'), name='nba'),
             ListItem(Label(':ice_hockey: NHL'), name='nhl'),
             ListItem(Label(':baseball: MLB'), name='mlb'),
-            ListItem(Label(':basketball: NBA'), name='nba'),
             ListItem(Label(':football: NFL'), name='nfl'),
 
         )
