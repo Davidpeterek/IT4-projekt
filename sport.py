@@ -66,7 +66,7 @@ class SportsScreen(Screen):
 
         # Zobrazení obsahu v kartách
         with Container(classes='bottom'):
-            with TabbedContent('Schedule', 'Standings', 'Injury', classes='bottom'):
+            with TabbedContent('Program', 'Tabulka', 'Zraneni', classes='bottom'):
                 # Zobrazení rozpisu zápasů
                 with SportsTableContainer(classes='bottom'):
                     for date, table in itertools.zip_longest(dates_list, df, fillvalue=' '):
@@ -106,21 +106,6 @@ class SportsScreen(Screen):
                         yield Label('[bold purple]Západní[/bold purple]')
                         yield Pretty(df2)
                         yield Label('')
-                    elif self.sport_name == 'nhl':
-                        # Zpracování tabulky pořadí pro NHL
-                        df1 = df_standings[0]
-                        df1 = df1.iloc[:, 0:6]
-                        df1 = df1.droplevel(0, axis=1)
-                        df1 = df1.dropna()
-                        df2 = df_standings[1]
-                        df2 = df2.iloc[:, 0:6]
-                        df2 = df2.droplevel(0, axis=1)
-                        df2 = df2.dropna()
-                        yield Label('[bold purple]Východní[/bold purple]')
-                        yield Pretty(df1)
-                        yield Label('[bold purple]Západní[/bold purple]')
-                        yield Pretty(df2)
-                        yield Label('')
                     elif self.sport_name == 'nfl':
                         # Zpracování tabulky pořadí pro NFL
                         df1 = df_standings[0]
@@ -131,9 +116,24 @@ class SportsScreen(Screen):
                         df2 = df2.iloc[:, 0:4]
                         df2 = df2.droplevel(0, axis=1)
                         df2 = df2.dropna()
-                        yield Label('[bold purple]AFC[/bold purple]')
+                        yield Label('[bold green]AFC[/bold green]')
                         yield Pretty(df1)
-                        yield Label('[bold purple]NFC[/bold purple]')
+                        yield Label('[bold green]NFC[/bold green]')
+                        yield Pretty(df2)
+                        yield Label('')
+                    elif self.sport_name == 'nhl':
+                        # Zpracování tabulky pořadí pro NHL
+                        df1 = df_standings[0]
+                        df1 = df1.iloc[:, 0:6]
+                        df1 = df1.droplevel(0, axis=1)
+                        df1 = df1.dropna()
+                        df2 = df_standings[1]
+                        df2 = df2.iloc[:, 0:6]
+                        df2 = df2.droplevel(0, axis=1)
+                        df2 = df2.dropna()
+                        yield Label('[bold yellow]Východní[/bold yellow]')
+                        yield Pretty(df1)
+                        yield Label('[bold yellow]Západní[/bold yellow]')
                         yield Pretty(df2)
                         yield Label('')
 
@@ -166,7 +166,7 @@ class Sports(App):
     SCREENS = {'sport': SportsScreen}
 
     BINDINGS = [
-        ('q', 'close_window', 'Konec aplikace'),  # Ukončení aplikace
+        ('e', 'close_window', 'Konec aplikace'),  # Ukončení aplikace
         ('escape', 'close_window', 'Konec aplikace'),
         ('d', 'toggle_dark', 'Přepnout tmavý režim'),  # Přepínání tmavého režimu
     ]
