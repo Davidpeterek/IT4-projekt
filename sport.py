@@ -184,6 +184,7 @@ class Sports(App):
             ListItem(Label(':basketball: NBA'), name='nba'),
             ListItem(Label(':football: NFL'), name='nfl'),
             ListItem(Label(':ice_hockey: NHL'), name='nhl'),
+            ListItem(Label(':soccer: Premier League'), name='pre'),
         )
         yield Footer()
 
