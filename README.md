@@ -9,23 +9,14 @@ Po spuštění se zobrazí následující data:
 - Tabulka
 - Zranění
 
-Pro daný sport:
-- MLB
-- NBA
-- NFL
-- NHL
 
-Všechna data jsou sbírána z [CBS Sports](https://cbssports.com).
+
+Data jsou získávána z [CBS Sports](https://cbssports.com).
 
 
 ## Jak spustit:
 
-#### Spustit pomocí pythonu
-instalovat balíčky lokálně nebo do virtuálního prostředí.
-```
-$ pip install -r requirements.txt
-$ python sports_tui.py
-```
+
 
 #### Vytvořít spustitelný soubor
 Pomocí PyInstalleru vytvořte spustitelný soubor pro váš operační systém. 
@@ -35,4 +26,11 @@ Skript vytvoří spustitelný soubor pro sport. To lze změnit úpravou přízna
 $ ./compile.sh
 $ cd dist
 $ ./sports
+```
+
+#### Spustit pomocí pythonu
+instalovat balíčky lokálně nebo do virtuálního prostředí.
+```
+$ pip install -r requirements.txt
+$ python sports_tui.py
 ```
